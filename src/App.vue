@@ -1,11 +1,10 @@
 <script setup lang="ts">
-// import { RouterLink, RouterView } from 'vue-router'
-// import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <div id="app">
-    <h1>Stylus com Vue & Vite!</h1>
+    <RouterView />
   </div>
 </template>
 
