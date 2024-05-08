@@ -25,4 +25,10 @@ import Icon from '@/assets/images/Icon.vue'
 
 .title-bold
   font-weight: 700
+  color: white
+
+.description
+  font-weight: 400
+  font-size: 16px
+  color: white
 </style>

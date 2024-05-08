@@ -13,6 +13,7 @@ import { RouterView } from 'vue-router'
   margin: 0
   padding: 0
   box-sizing: border-box
+  color: $text
 
 html, body
   font-family: 'SVN-Gilroy', sans-serif
@@ -21,4 +22,8 @@ html, body
 
 button, input, textarea
   font-family: inherit
+
+button
+  border: none
+  cursor: pointer
 </style>
