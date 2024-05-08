@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import DashboardContainerLateral from './DashboardContainerLateral.vue'
 import Header from './Header.vue'
 </script>
 <template>
   <div class="">
     <Header />
-    DashboardContainer
+    <DashboardContainerLateral />
   </div>
 </template>
 
