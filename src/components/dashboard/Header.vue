@@ -21,6 +21,7 @@
   flex-direction: column
   justify-content: center
   align-items: end
+  z-index: 100
 
 .account-container
   display: flex
