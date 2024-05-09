@@ -55,7 +55,7 @@ const allCategories: categoriesType[] = [
 <style scoped lang="stylus">
 .container-lateral
   width: 227px
-  height: 100%
+  height: calc(100vh - 83px)
   background: #F4FBFF
   box-shadow: 0px 1px 10px 0px rgba(40, 56, 72, 0.06)
   display: flex

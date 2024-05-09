@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// Usando 'defineProps' para definir as propriedades
 const { color } = defineProps({
   color: {
     type: String,
