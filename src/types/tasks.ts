@@ -1,6 +1,6 @@
 export enum priority {
-  URGENT = 'urgent',
-  IMPORTANT = 'important'
+  URGENT = 'Urgente',
+  IMPORTANT = 'Importante'
 }
 
 interface taskType {

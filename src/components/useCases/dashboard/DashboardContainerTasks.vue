@@ -49,9 +49,9 @@ const allTasks: taskType[] = [
             <Card.CardCheckbox :completed="task.completed" />
             <Card.CardDescription :completed="task.completed" :description="task.description" />
           </Card.CardCheckboxContainer>
-          <div>
+          <Card.CardCheckboxContainer>
             <Card.CardTag v-if="task?.priority" :tag="task?.priority" />
-          </div>
+          </Card.CardCheckboxContainer>
         </Card.CardContainer>
       </div>
     </div>
