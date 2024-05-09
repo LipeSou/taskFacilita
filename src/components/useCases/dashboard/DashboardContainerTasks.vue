@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { priority, type taskType } from '@/types/tasks'
 import Card from './dashboardContainerTasksCard'
+import InputFacilita from '@/components/common/inputFacilita.vue'
 
 const allTasks: taskType[] = [
   {
@@ -43,6 +44,9 @@ const allTasks: taskType[] = [
         Olá <span class="description-bold">Eduardo Pereira</span>, você tem
         <span class="description-bold">4 tarefas</span> pendentes.
       </p>
+      <div class="search-container">
+        <InputFacilita placeholder="Buscar tarefas" :isSeachComponent="true" />
+      </div>
       <div class="taks" v-for="task in allTasks" :key="task.id">
         <Card.CardContainer :completed="task.completed">
           <Card.CardCheckboxContainer>
@@ -60,11 +64,17 @@ const allTasks: taskType[] = [
 
 <style scoped lang="stylus">
 .tasks-container
+  padding-top: 118px
   display: flex
   flex-direction: column
   align-items: center
-  justify-content: center
   width: 100%
+  height: calc(100vh - 100px)
+  overflow-y: auto
+
+.search-container
+  margin-bottom: 30px
+  margin-top: 30px
 
 .description
   margin-top: 4px

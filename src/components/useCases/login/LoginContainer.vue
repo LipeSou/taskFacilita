@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InputFacilita from '@/components/common/inputFacilita.vue'
 import router from '@/router'
 
 const login = () => {
@@ -10,15 +11,9 @@ const login = () => {
     <div>
       <h2 class="title">Entre com seus dados de acesso</h2>
       <form @submit.prevent="login">
-        <div class="input-container">
-          <label class="label" for="username">Nome de usuário ou e-mail:</label>
-          <input class="input" type="text" id="username" />
-        </div>
+        <InputFacilita label="Nome de usuário ou e-mail:" type="text" />
         <div class="divider"></div>
-        <div class="input-container">
-          <label class="label" for="password">Senha:</label>
-          <input class="input" type="password" id="password" />
-        </div>
+        <InputFacilita label="Senha:" type="password" />
         <button class="button" type="submit">Entrar</button>
         <p><a href="#" class="forget-password">Esqueci minha senha</a></p>
       </form>
