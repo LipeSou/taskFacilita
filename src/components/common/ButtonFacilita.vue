@@ -22,6 +22,10 @@ const props = defineProps({
     type: String,
     default: 'Click Me'
   },
+  roundedButton: {
+    type: Boolean,
+    default: false
+  },
   additionalStyles: {
     type: Object as () => Record<string, string | number>,
     default: () => ({})
@@ -39,7 +43,7 @@ const buttonStyles = computed(() => ({
   height: props.height,
   backgroundColor: props.backgroundColor,
   color: props.color,
-  borderRadius: '5px',
+  borderRadius: props.roundedButton ? '100%' : '5px',
   padding: '19px',
   fontSize: '16px',
   fontWeight: '700',
