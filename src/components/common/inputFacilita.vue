@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineEmits } from 'vue'
 
 const { modelValue, placeholder, type, label, isSeachComponent } = defineProps({
   modelValue: {
