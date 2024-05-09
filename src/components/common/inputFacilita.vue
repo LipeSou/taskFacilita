@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SearchIcon from '@/assets/images/SearchIcon.vue'
 import { defineEmits } from 'vue'
 
 const { modelValue, placeholder, type, label, isSeachComponent } = defineProps({
@@ -41,11 +42,15 @@ function updateValue(event: any) {
       @input="updateValue"
       :placeholder="placeholder"
     />
+    <i v-if="isSeachComponent" class="icon-lupa">
+      <SearchIcon />
+    </i>
   </div>
 </template>
 
 <style scoped lang="stylus">
 .input-container
+  position: relative
   display: flex
   flex-direction: column
 
@@ -57,12 +62,19 @@ function updateValue(event: any) {
 
 .input
   height: 55px
-  padding: 15px
+  padding: 15px 40px 15px 15px
   border-radius: 5px
   border: 2px solid #BFDAEB
   font-size: 18px
   &:hover, &:focus
     border: 2px solid $primary-color
+
+.icon-lupa
+  position: absolute
+  right: 10px
+  top: 14px
+  font-size: 20px
+  color: #A6C1D2
 
 .is-search-background
   background: none
