@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ButtonAddTasks from '../buttonAddTasks/buttonAddTasks.vue'
 import DashboardContainerLateral from './DashboardContainerLateral.vue'
 import DashboardContainerTasks from './DashboardContainerTasks.vue'
 import Header from './Header.vue'
@@ -11,7 +10,6 @@ import Header from './Header.vue'
       <DashboardContainerLateral />
       <DashboardContainerTasks />
     </div>
-    <ButtonAddTasks />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ButtonFacilita from '@/components/common/ButtonFacilita.vue'
-import InputFacilita from '@/components/common/inputFacilita.vue'
+import InputFacilita from '@/components/common/InputFacilita.vue'
 import router from '@/router'
 
 const login = () => {
@@ -15,7 +15,14 @@ const login = () => {
         <InputFacilita label="Nome de usuário ou e-mail:" type="text" />
         <div class="divider"></div>
         <InputFacilita label="Senha:" type="password" />
-        <ButtonFacilita backgroundColor="#1AD18F" @click="login">Entrar</ButtonFacilita>
+        <ButtonFacilita
+          :additionalStyles="{
+            'margin-bottom': '42px'
+          }"
+          backgroundColor="#1AD18F"
+          @click="login"
+          >Entrar</ButtonFacilita
+        >
         <p><a href="#" class="forget-password">Esqueci minha senha</a></p>
       </form>
     </div>

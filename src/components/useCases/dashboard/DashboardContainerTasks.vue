@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { priority, type taskType } from '@/types/tasks'
 import Card from './dashboardContainerTasksCard'
-import InputFacilita from '@/components/common/inputFacilita.vue'
+import ModalFacilita from '@/components/common/ModalFacilita.vue'
+import ButtonAddTasks from '../buttonAddTasks/buttonAddTasks.vue'
+import { ref } from 'vue'
+import AddTasksModal from '../modalBodies/AddTasksModal.vue'
+import InputFacilita from '@/components/common/InputFacilita.vue'
 
 const allTasks: taskType[] = [
   {
@@ -35,6 +39,17 @@ const allTasks: taskType[] = [
     priority: null
   }
 ]
+
+const showModalTaskCadaster = ref<boolean>(false)
+
+function openModalCadaster() {
+  showModalTaskCadaster.value = true
+}
+
+function closeModalCadaster() {
+  console.log('Fechando modal')
+  showModalTaskCadaster.value = false
+}
 </script>
 <template>
   <div class="tasks-container">
@@ -44,10 +59,14 @@ const allTasks: taskType[] = [
         Olá <span class="description-bold">Eduardo Pereira</span>, você tem
         <span class="description-bold">4 tarefas</span> pendentes.
       </p>
+      <!-- Input de busca / Utiliza o input reutilizável -->
       <div class="search-container">
         <InputFacilita placeholder="Buscar tarefas" :isSeachComponent="true" />
       </div>
+
+      <!-- Cards das tasks -->
       <div class="taks" v-for="task in allTasks" :key="task.id">
+        <!-- Componente Card utilizando o Pattern Composition que permite deixar o componente bem mais maleável e com menos props dividindo em vários sub componentes -->
         <Card.CardContainer :completed="task.completed">
           <Card.CardCheckboxContainer>
             <Card.CardCheckbox :completed="task.completed" />
@@ -59,6 +78,15 @@ const allTasks: taskType[] = [
         </Card.CardContainer>
       </div>
     </div>
+    <!-- botao e modal de cadastro de tarefas -->
+    <ButtonAddTasks :onClick="openModalCadaster" />
+    <ModalFacilita
+      :title="'Cadastrar Tarefa'"
+      :showDialog="showModalTaskCadaster"
+      @on-close="closeModalCadaster"
+    >
+      <AddTasksModal />
+    </ModalFacilita>
   </div>
 </template>
 

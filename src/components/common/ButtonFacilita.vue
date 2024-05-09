@@ -48,7 +48,6 @@ const buttonStyles = computed(() => ({
   fontSize: '16px',
   fontWeight: '700',
   marginTop: '18px',
-  marginBottom: '42px',
   ...props.additionalStyles
 }))
 </script>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import SearchIcon from '@/assets/images/SearchIcon.vue'
-import { defineEmits } from 'vue'
+import { computed, defineEmits } from 'vue'
 
-const { modelValue, placeholder, type, label, isSeachComponent } = defineProps({
+const { modelValue, placeholder, type, label, isSeachComponent, width, height } = defineProps({
   modelValue: {
     type: String,
     default: ''
@@ -22,6 +22,18 @@ const { modelValue, placeholder, type, label, isSeachComponent } = defineProps({
   isSeachComponent: {
     type: Boolean,
     default: false
+  },
+  isTextArea: {
+    type: Boolean,
+    default: false
+  },
+  width: {
+    type: String,
+    default: '100%'
+  },
+  height: {
+    type: String,
+    default: '55px'
   }
 })
 
@@ -30,17 +42,24 @@ const emit = defineEmits(['update:modelValue'])
 function updateValue(event: any) {
   emit('update:modelValue', event?.target?.value)
 }
+
+const inputStyles = computed(() => ({
+  width,
+  height
+}))
 </script>
 
 <template>
   <div class="input-container">
     <label v-if="label" class="label" for="username">{{ label }}</label>
-    <input
+    <component
+      :is="isTextArea ? 'textarea' : 'input'"
       :class="['input', isSeachComponent ? 'is-search-background' : '']"
       :type="type"
       :value="modelValue"
       @input="updateValue"
       :placeholder="placeholder"
+      :style="inputStyles"
     />
     <i v-if="isSeachComponent" class="icon-lupa">
       <SearchIcon />
@@ -61,7 +80,6 @@ function updateValue(event: any) {
   margin-bottom: 5px
 
 .input
-  height: 55px
   padding: 15px 40px 15px 15px
   border-radius: 5px
   border: 2px solid #BFDAEB

@@ -1,11 +1,20 @@
 <script setup lang="ts">
+import { defineEmits } from 'vue'
 import AddIcon from '@/assets/images/AddIcon.vue'
 import ButtonFacilita from '@/components/common/ButtonFacilita.vue'
+
+const onClick = defineEmits(['onClick'])
 </script>
 
 <template>
   <div class="button-add-taks-container">
-    <ButtonFacilita :roundedButton="true" width="77px" height="77px" backgroundColor="#1AD18F">
+    <ButtonFacilita
+      :onClick="onClick"
+      :roundedButton="true"
+      width="77px"
+      height="77px"
+      backgroundColor="#1AD18F"
+    >
       <AddIcon />
     </ButtonFacilita>
   </div>
