@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type taskType } from '@/types/tasks'
-import Card from './dashboardContainerTasksCard'
+import Card from '../dashboardContainerTasksCard'
 import ModalFacilita from '@/components/common/ModalFacilita.vue'
 import ButtonAddTasks from '../buttonAddTasks/buttonAddTasks.vue'
 import { computed, ref } from 'vue'
@@ -11,6 +11,7 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 const allTasks = computed<taskType[]>(() => store.state.todos)
+const todosQuantity = computed<number>(() => store.state.todosQuantity)
 
 const showModalTaskCadaster = ref<boolean>(false)
 
@@ -27,10 +28,10 @@ function closeModalCadaster() {
   <div class="tasks-container">
     <div>
       <h2 class="my-tasks">Minhas tarefas</h2>
-      <!-- Verifica se possui ou nao tasks -->
-      <p v-if="allTasks.length > 0" class="description">
+      <!-- Verifica se possui ou nao tasks e mostra a descriçao de quantas tasks-->
+      <p v-if="todosQuantity > 0" class="description">
         Olá <span class="description-bold">Eduardo Pereira</span>, você tem
-        <span class="description-bold">4 tarefas</span> pendentes.
+        <span class="description-bold">{{ todosQuantity }} tarefas</span> pendentes.
       </p>
       <p v-else class="description">
         Olá <span class="description-bold">Eduardo Pereira</span>, você<span
@@ -38,10 +39,11 @@ function closeModalCadaster() {
         >
           não possui tarefas</span
         >
-        pendentes. Adicione uma tarefa para aparecer para você.
+        pendentes. <br />
+        Adicione uma tarefa para aparecer para você.
       </p>
       <!-- Input de busca / Utiliza o input reutilizável -->
-      <div v-if="allTasks.length > 0" class="search-container">
+      <div v-if="todosQuantity > 0" class="search-container">
         <InputFacilita placeholder="Buscar tarefas" :isSeachComponent="true" />
       </div>
 

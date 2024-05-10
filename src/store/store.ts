@@ -3,11 +3,13 @@ import { createStore } from 'vuex'
 
 export interface State {
   todos: taskType[]
+  todosQuantity: number
 }
 
 export const store = createStore<State>({
   state: {
-    todos: []
+    todos: [],
+    todosQuantity: 0
   },
   actions: {
     addTodo: ({ commit }, payload) => commit('addTodo', payload),
@@ -16,9 +18,11 @@ export const store = createStore<State>({
   mutations: {
     addTodo(state, payload: taskType) {
       state.todos = [...state.todos, payload]
+      state.todosQuantity = state.todos.length
     },
     deleteTodo(state, payload) {
       state.todos.filter((c, i) => i !== payload)
+      state.todosQuantity = state.todos.length
     }
   }
 })
