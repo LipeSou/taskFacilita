@@ -5,7 +5,8 @@ export enum priority {
 
 interface taskType {
   id: number
-  description: string
+  title: string
+  description?: string
   priority?: priority | null
   completed: boolean
 }

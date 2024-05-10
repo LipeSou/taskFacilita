@@ -1,44 +1,16 @@
 <script setup lang="ts">
-import { priority, type taskType } from '@/types/tasks'
+import { type taskType } from '@/types/tasks'
 import Card from './dashboardContainerTasksCard'
 import ModalFacilita from '@/components/common/ModalFacilita.vue'
 import ButtonAddTasks from '../buttonAddTasks/buttonAddTasks.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import AddTasksModal from '../modalBodies/AddTasksModal.vue'
 import InputFacilita from '@/components/common/InputFacilita.vue'
+import { useStore } from 'vuex'
 
-const allTasks: taskType[] = [
-  {
-    id: 1,
-    description: 'Planejar desenvolvimento do app TodoList',
-    completed: true,
-    priority: priority.URGENT
-  },
-  {
-    id: 2,
-    description: 'Criar projeto Vue.js',
-    completed: false,
-    priority: priority.IMPORTANT
-  },
-  {
-    id: 3,
-    description: 'Montar telas HTML/CSS',
-    completed: false,
-    priority: null
-  },
-  {
-    id: 4,
-    description: 'Separar componentes ',
-    completed: false,
-    priority: null
-  },
-  {
-    id: 5,
-    description: 'Programar componentes',
-    completed: false,
-    priority: null
-  }
-]
+const store = useStore()
+
+const allTasks = computed<taskType[]>(() => store.state.todos)
 
 const showModalTaskCadaster = ref<boolean>(false)
 
@@ -55,12 +27,21 @@ function closeModalCadaster() {
   <div class="tasks-container">
     <div>
       <h2 class="my-tasks">Minhas tarefas</h2>
-      <p class="description">
+      <!-- Verifica se possui ou nao tasks -->
+      <p v-if="allTasks.length > 0" class="description">
         Olá <span class="description-bold">Eduardo Pereira</span>, você tem
         <span class="description-bold">4 tarefas</span> pendentes.
       </p>
+      <p v-else class="description">
+        Olá <span class="description-bold">Eduardo Pereira</span>, você<span
+          class="description-bold"
+        >
+          não possui tarefas</span
+        >
+        pendentes. Adicione uma tarefa para aparecer para você.
+      </p>
       <!-- Input de busca / Utiliza o input reutilizável -->
-      <div class="search-container">
+      <div v-if="allTasks.length > 0" class="search-container">
         <InputFacilita placeholder="Buscar tarefas" :isSeachComponent="true" />
       </div>
 
@@ -70,7 +51,7 @@ function closeModalCadaster() {
         <Card.CardContainer :completed="task.completed">
           <Card.CardCheckboxContainer>
             <Card.CardCheckbox :completed="task.completed" />
-            <Card.CardDescription :completed="task.completed" :description="task.description" />
+            <Card.CardDescription :completed="task.completed" :description="task.title" />
           </Card.CardCheckboxContainer>
           <Card.CardCheckboxContainer>
             <Card.CardTag v-if="task?.priority" :tag="task?.priority" />
