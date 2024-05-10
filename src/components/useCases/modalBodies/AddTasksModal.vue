@@ -1,12 +1,26 @@
 <script setup lang="ts">
 import ButtonFacilita from '@/components/common/ButtonFacilita.vue'
 import InputFacilita from '@/components/common/InputFacilita.vue'
-import type { taskType } from '@/types/tasks'
+import type { priority, taskType } from '@/types/tasks'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
 const title = ref('')
 const description = ref('')
+const priorityCheck = ref<priority | ''>('')
+
+// funçao para atualizar a prioridade conforme clica no checkbox
+function updatePriority(event: Event) {
+  const target = event.target as HTMLInputElement
+  if (target.checked) {
+    priorityCheck.value = target.value as priority
+  } else {
+    // Se desmarcar, limpar o valor
+    if (priorityCheck.value === target.value) {
+      priorityCheck.value = ''
+    }
+  }
+}
 
 // vuex para adicionar todo
 const store = useStore()
@@ -21,7 +35,7 @@ function onAddTodo() {
     completed: false,
     title: title.value,
     description: description.value,
-    priority: null
+    priority: priorityCheck?.value ? priorityCheck.value : null
   }
   addTodo(todo)
 }
@@ -41,25 +55,43 @@ function onAddTodo() {
       :height="'183px'"
       v-model="description"
     />
-    <!-- <ButtonFacilita
-      :additionalStyles="{
-        'margin-bottom': '36px'
-      }"
-      class="button"
-      backgroundColor="#16D08D"
-      @click="onDeleteTodo"
-    >
-      Deletar
-    </ButtonFacilita> -->
-    <ButtonFacilita
-      :additionalStyles="{
-        'margin-bottom': '36px'
-      }"
-      class="button"
-      backgroundColor="#16D08D"
-    >
-      Adicionar
-    </ButtonFacilita>
+    <div class="footer">
+      <!-- checkbo prioridade -->
+      <div class="checkbox-container">
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            value="Urgente"
+            @change="updatePriority"
+            :checked="priorityCheck === 'Urgente'"
+          />
+          <span class="checkbox-circle"></span>
+          <span class="checkbox-label">Urgente</span>
+        </label>
+
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            value="Importante"
+            @change="updatePriority"
+            :checked="priorityCheck === 'Importante'"
+          />
+          <span class="checkbox-circle"></span>
+          <span class="checkbox-label">Importante</span>
+        </label>
+      </div>
+      <!-- botao de criar task  -->
+      <ButtonFacilita
+        :additionalStyles="{
+          'margin-bottom': '36px'
+        }"
+        class="button"
+        :width="'118px'"
+        backgroundColor="#16D08D"
+      >
+        Adicionar
+      </ButtonFacilita>
+    </div>
   </form>
 </template>
 
@@ -67,4 +99,61 @@ function onAddTodo() {
 .input-title
   margin-top:40px
   margin-bottom: 15px
+
+.checkbox-container
+  margin-top: 18px
+
+.custom-checkbox
+  display: inline-flex
+  align-items: center
+  cursor: pointer
+
+
+.custom-checkbox input[type="checkbox"]
+  display: none
+
+
+.custom-checkbox .checkbox-circle
+  width: 20px
+  height: 20px
+  border-radius: 50%
+  margin-right: 10px
+  background: #FFFFFF
+  border: 2px solid #BFDAEB
+  position: relative
+
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-circle
+  background: #2693FF
+
+
+.custom-checkbox .checkbox-circle:after
+  content: ""
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  width: 10px
+  height: 10px
+  border-radius: 50%
+  background: #2693FF
+  border: 2px solid #BFDAEB
+
+  opacity: 0
+  transition: opacity 0.2s
+
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-circle:after
+  opacity: 1
+
+
+.custom-checkbox .checkbox-label
+  color: $text
+  font-size: 14px
+  font-weight: 600
+  margin-right: 12px
+
+.footer
+  display: flex
+  justify-content: space-between
 </style>

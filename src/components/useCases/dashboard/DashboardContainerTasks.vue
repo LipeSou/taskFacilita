@@ -52,7 +52,7 @@ function closeModalCadaster() {
         <!-- Componente Card utilizando o Pattern Composition que permite deixar o componente bem mais maleável e com menos props dividindo em vários sub componentes -->
         <Card.CardContainer :completed="task.completed">
           <Card.CardCheckboxContainer>
-            <Card.CardCheckbox :completed="task.completed" />
+            <Card.CardCheckbox :id="task.id" :completed="task.completed" />
             <Card.CardDescription :completed="task.completed" :description="task.title" />
           </Card.CardCheckboxContainer>
           <Card.CardCheckboxContainer>

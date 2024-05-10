@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import CheckedIcon from '@/assets/images/CheckedIcon.vue'
+import { useStore } from 'vuex'
 
-defineProps<{
+const props = defineProps<{
+  id: number
   completed: Boolean
 }>()
+
+const store = useStore()
+
+const checkedTodo = (payload: { id: number; completed: boolean }) =>
+  store.dispatch('checkedTodo', payload)
+
+function checkedTask() {
+  checkedTodo({
+    id: props.id,
+    completed: !props.completed
+  })
+}
 </script>
 
 <template>
-  <div :class="completed ? 'checkbox-completed' : 'checkbox'">
+  <div @click="checkedTask" :class="completed ? 'checkbox-completed' : 'checkbox'">
     <CheckedIcon v-if="completed" />
   </div>
 </template>
