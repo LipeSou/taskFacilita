@@ -65,6 +65,7 @@ function closeModalCadaster() {
           </Card.CardCheckboxContainer>
           <Card.CardCheckboxContainer>
             <Card.CardTag v-if="task?.priority" :tag="task?.priority" />
+            <Card.CardDropdown />
           </Card.CardCheckboxContainer>
         </Card.CardContainer>
       </div>
