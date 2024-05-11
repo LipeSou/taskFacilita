@@ -1,23 +1,49 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import DropdownIcon from '@/assets/images/DropdownIcon.vue'
+import ModalFacilita from '@/components/common/ModalFacilita.vue'
+import AddTasksModal from '../modalBodies/AddTasksModal.vue'
+import type { taskType } from '@/types/tasks'
+
+interface CardDropdownProps {
+  todo: taskType
+}
+
+const { todo } = defineProps<CardDropdownProps>()
 
 const menuVisible = ref(false)
 const menuRef = ref(null)
+const showModalTaskEdit = ref<boolean>(false)
 
 const toggleMenu = () => {
   menuVisible.value = !menuVisible.value
 }
+
+function openModalCadaster() {
+  toggleMenu()
+  showModalTaskEdit.value = true
+}
+
+function closeModalCadaster() {
+  showModalTaskEdit.value = false
+}
 </script>
 
 <template>
+  <ModalFacilita
+    :title="'Editar Tarefa'"
+    :showDialog="showModalTaskEdit"
+    @on-close="closeModalCadaster"
+  >
+    <AddTasksModal v-if="showModalTaskEdit" :todo="todo" :isEditTodo="true" />
+  </ModalFacilita>
   <div class="icon-container">
     <DropdownIcon class="icon" @click.stop="toggleMenu" />
     <ul class="menu" v-show="menuVisible" ref="menuRef">
       <div class="icon-menu">
         <DropdownIcon class="icon" fill="#2693FF" @click.stop="toggleMenu" />
       </div>
-      <li class="options">
+      <li class="options" @click="openModalCadaster">
         <div class="circle"></div>
         Editar
       </li>

@@ -26,6 +26,7 @@ export const store = createStore<State>({
   },
   actions: {
     addTodo: ({ commit }, payload) => commit('addTodo', payload),
+    editTodo: ({ commit }, payload) => commit('editTodo', payload),
     deleteTodo: ({ commit }, payload) => commit('deleteTodo', payload),
     checkedTodo: ({ commit }, payload) => commit('checkedTodo', payload),
     changeCategory: ({ commit }, payload) => commit('changeCategory', payload)
@@ -78,6 +79,14 @@ export const store = createStore<State>({
       const todo = state.todos.find((todo) => todo.id === payload.id)
       if (todo) {
         todo.completed = payload.completed
+      }
+      localStorage.setItem('todos', JSON.stringify(state.todos))
+    },
+    editTodo(state, payload: taskType) {
+      const index = state.todos.findIndex((todo) => todo.id === payload.id)
+      if (index !== -1) {
+        // Substitui o todo antigo pelo novo todo fornecido no payload
+        state.todos.splice(index, 1, payload)
       }
       localStorage.setItem('todos', JSON.stringify(state.todos))
     },

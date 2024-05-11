@@ -28,7 +28,6 @@ function openModalCadaster() {
 }
 
 function closeModalCadaster() {
-  console.log('Fechando modal')
   showModalTaskCadaster.value = false
 }
 </script>
@@ -65,7 +64,7 @@ function closeModalCadaster() {
           </Card.CardCheckboxContainer>
           <Card.CardCheckboxContainer>
             <Card.CardTag v-if="task?.priority" :tag="task?.priority" />
-            <Card.CardDropdown />
+            <Card.CardDropdown :todo="task" />
           </Card.CardCheckboxContainer>
         </Card.CardContainer>
       </div>

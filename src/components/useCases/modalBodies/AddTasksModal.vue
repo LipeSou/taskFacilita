@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import ButtonFacilita from '@/components/common/ButtonFacilita.vue'
 import InputFacilita from '@/components/common/InputFacilita.vue'
-import type { priority, taskType } from '@/types/tasks'
+import { type taskType, type priority } from '@/types/tasks'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
-const title = ref('')
-const description = ref('')
-const priorityCheck = ref<priority | ''>('')
+interface AddTaskModalProps {
+  todo?: taskType
+  isEditTodo?: boolean
+}
+
+const { todo, isEditTodo } = defineProps<AddTaskModalProps>()
+
+const title = ref(isEditTodo ? todo?.title : '')
+const description = ref(todo?.description ? todo?.description : '')
+const priorityCheck = ref<priority | ''>(todo?.priority ? todo?.priority : '')
 
 // funçao para atualizar a prioridade conforme clica no checkbox
 function updatePriority(event: Event) {
@@ -26,18 +33,20 @@ function updatePriority(event: Event) {
 const store = useStore()
 const allTodos = computed<taskType[]>(() => store.state.todos)
 const addTodo = (payload: taskType) => store.dispatch('addTodo', payload)
+const editTodo = (payload: taskType) => store.dispatch('editTodo', payload)
 
 function onAddTodo() {
   if (!title.value) return
+
   const id = allTodos.value.length + 1
-  const todo: taskType = {
-    id,
+  const todoData: taskType = {
+    id: isEditTodo ? (todo?.id as number) : id,
     completed: false,
     title: title.value,
     description: description.value,
     priority: priorityCheck?.value ? priorityCheck.value : null
   }
-  addTodo(todo)
+  isEditTodo ? editTodo(todoData) : addTodo(todoData)
 }
 </script>
 
@@ -89,7 +98,7 @@ function onAddTodo() {
         :width="'118px'"
         backgroundColor="#16D08D"
       >
-        Adicionar
+        {{ isEditTodo ? 'Editar' : 'Adicionar' }}
       </ButtonFacilita>
     </div>
   </form>
