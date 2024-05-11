@@ -10,9 +10,17 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-const allTasks = computed<taskType[]>(() => store.state.todos)
+const allTasks = computed<taskType[]>(() => store.getters.filteredTodos)
 const todosQuantity = computed<number>(() => store.state.todosQuantity)
-
+const searchTerm = ref('')
+// filtra de acordo com o termo da busca
+const filteredTasks = computed(() => {
+  return allTasks.value.filter(
+    (task) =>
+      task.title.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+      task.description?.toLowerCase().includes(searchTerm.value.toLowerCase())
+  )
+})
 const showModalTaskCadaster = ref<boolean>(false)
 
 function openModalCadaster() {
@@ -44,11 +52,11 @@ function closeModalCadaster() {
       </p>
       <!-- Input de busca / Utiliza o input reutilizável -->
       <div v-if="todosQuantity > 0" class="search-container">
-        <InputFacilita placeholder="Buscar tarefas" :isSeachComponent="true" />
+        <InputFacilita placeholder="Buscar tarefas" v-model="searchTerm" :isSeachComponent="true" />
       </div>
 
       <!-- Cards das tasks -->
-      <div class="taks" v-for="task in allTasks" :key="task.id">
+      <div class="taks" v-for="task in filteredTasks" :key="task.id">
         <!-- Componente Card utilizando o Pattern Composition que permite deixar o componente bem mais maleável e com menos props dividindo em vários sub componentes -->
         <Card.CardContainer :completed="task.completed">
           <Card.CardCheckboxContainer>
@@ -86,6 +94,7 @@ function closeModalCadaster() {
 .search-container
   margin-bottom: 30px
   margin-top: 30px
+  width: 633px
 
 .description
   margin-top: 4px

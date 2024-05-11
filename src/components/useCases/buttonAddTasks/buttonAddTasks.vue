@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineEmits } from 'vue'
 import AddIcon from '@/assets/images/AddIcon.vue'
 import ButtonFacilita from '@/components/common/ButtonFacilita.vue'
 

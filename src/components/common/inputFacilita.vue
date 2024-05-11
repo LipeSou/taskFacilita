@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SearchIcon from '@/assets/images/SearchIcon.vue'
-import { computed, defineEmits } from 'vue'
+import { computed } from 'vue'
 
 const { modelValue, placeholder, type, label, isSeachComponent, width, height } = defineProps({
   modelValue: {
