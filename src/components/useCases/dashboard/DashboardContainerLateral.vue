@@ -1,45 +1,62 @@
 <script setup lang="ts">
 import type { categoriesType } from '@/types/categories'
 import RightArrow from '@/assets/images/RightArrow.vue'
-const allCategories: categoriesType[] = [
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
+const store = useStore()
+
+const activeCategory = computed(() => store.state.categorieActive)
+const todosQuantityUrgent = computed(() => store.state.todosQuantityUrgent)
+const todosQuantityImportant = computed(() => store.state.todosQuantityImportant)
+const changeCategory = (payload: string) => store.dispatch('changeCategory', payload)
+
+// objeto que vai construir as opcoes do menu
+const allCategories = computed<categoriesType[]>(() => [
   {
     name: 'Todas',
     quantity: null,
-    color: null,
-    active: true
+    color: null
   },
   {
     name: 'Urgentes',
-    quantity: 1,
-    color: 'error',
-    active: false
+    quantity: todosQuantityUrgent.value,
+    color: 'error'
   },
   {
     name: 'Importantes',
-    quantity: 2,
-    color: 'alert',
-    active: false
+    quantity: todosQuantityImportant.value,
+    color: 'alert'
   },
   {
     name: 'Outras',
     quantity: null,
-    color: null,
-    active: false
+    color: null
   },
   {
     name: 'Finalizadas',
     quantity: null,
-    color: null,
-    active: false
+    color: null
   }
-]
+])
+// funçao para alterar categoria
+function onChangeCategory(category: string) {
+  console.log('category', category)
+  changeCategory(category)
+}
 </script>
 <template>
   <div class="container-lateral">
     <h2 class="categories-text">Categorias</h2>
     <div class="categories" v-for="categories in allCategories" :key="categories.name">
-      <RightArrow class="right-arrow-active" :color="categories?.active ? '#2693FF' : '#283848'" />
-      <p :class="categories.active ? 'categories-name-active' : 'categories-name'">
+      <RightArrow
+        class="right-arrow-active"
+        :color="activeCategory === categories.name ? '#2693FF' : '#283848'"
+      />
+      <p
+        @click="onChangeCategory(categories.name)"
+        :class="activeCategory === categories.name ? 'categories-name-active' : 'categories-name'"
+      >
         {{ categories.name }}
       </p>
       <div
