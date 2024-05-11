@@ -1,5 +1,6 @@
 import { priority, type taskType } from '@/types/tasks'
 import { createStore } from 'vuex'
+import { localStoragePlugin } from './plugin'
 
 export interface State {
   todos: taskType[] // lista de tarefas
@@ -9,12 +10,18 @@ export interface State {
   categorieActive: string // a categoria que esta ativa, começa com Todas
 }
 
+const allTodos = JSON.parse(localStorage.getItem('todos') || '[]')
+
 export const store = createStore<State>({
+  plugins: [localStoragePlugin], // plugin para salvar automaticamente no local storage
   state: {
-    todos: [],
-    todosQuantity: 0,
-    todosQuantityUrgent: 0,
-    todosQuantityImportant: 0,
+    todos: allTodos,
+    todosQuantity: allTodos.length,
+    todosQuantityUrgent: allTodos.filter((todo: taskType) => todo.priority === priority.URGENT)
+      .length,
+    todosQuantityImportant: allTodos.filter(
+      (todo: taskType) => todo.priority === priority.IMPORTANT
+    ).length,
     categorieActive: 'Todas'
   },
   actions: {
@@ -56,6 +63,7 @@ export const store = createStore<State>({
   mutations: {
     addTodo(state, payload: taskType) {
       state.todos = [...state.todos, payload]
+      localStorage.setItem('todos', JSON.stringify(state.todos))
       //  apos adicionar os todos ele verifica a quantidade de todos,
       // de todos urgentes e todos importantes
       state.todosQuantity = state.todos.length
@@ -71,9 +79,11 @@ export const store = createStore<State>({
       if (todo) {
         todo.completed = payload.completed
       }
+      localStorage.setItem('todos', JSON.stringify(state.todos))
     },
     deleteTodo(state, payload) {
       state.todos = state.todos.filter((c, i) => i !== payload)
+      localStorage.setItem('todos', JSON.stringify(state.todos))
       //  apos deletar os todos ele verifica a quantidade de todos,
       // de todos urgentes e todos importantes
       state.todosQuantity = state.todos.length
