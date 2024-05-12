@@ -41,10 +41,10 @@ function onAddTodo() {
   const id = allTodos.value.length + 1
   const todoData: taskType = {
     id: isEditTodo ? (todo?.id as number) : id,
-    completed: false,
     title: title.value,
     description: description.value,
-    priority: priorityCheck?.value ? priorityCheck.value : null
+    priority: priorityCheck?.value ? priorityCheck.value : null,
+    completed: isEditTodo && todo?.completed ? todo?.completed : false
   }
   isEditTodo ? editTodo(todoData) : addTodo(todoData)
 }
@@ -97,6 +97,7 @@ function onAddTodo() {
         class="button"
         :width="'118px'"
         backgroundColor="#16D08D"
+        :disabled="title?.trim().length === 0"
       >
         {{ isEditTodo ? 'Editar' : 'Adicionar' }}
       </ButtonFacilita>

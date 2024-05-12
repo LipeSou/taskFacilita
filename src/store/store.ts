@@ -90,8 +90,8 @@ export const store = createStore<State>({
       }
       localStorage.setItem('todos', JSON.stringify(state.todos))
     },
-    deleteTodo(state, payload) {
-      state.todos = state.todos.filter((c, i) => i !== payload)
+    deleteTodo(state, payload: number) {
+      state.todos = state.todos.filter((todo) => todo.id !== payload)
       localStorage.setItem('todos', JSON.stringify(state.todos))
       //  apos deletar os todos ele verifica a quantidade de todos,
       // de todos urgentes e todos importantes

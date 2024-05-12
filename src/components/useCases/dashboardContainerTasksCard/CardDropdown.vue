@@ -4,6 +4,7 @@ import DropdownIcon from '@/assets/images/DropdownIcon.vue'
 import ModalFacilita from '@/components/common/ModalFacilita.vue'
 import AddTasksModal from '../modalBodies/AddTasksModal.vue'
 import type { taskType } from '@/types/tasks'
+import DeleteTaskModal from '../modalBodies/DeleteTaskModal.vue'
 
 interface CardDropdownProps {
   todo: taskType
@@ -13,7 +14,9 @@ const { todo } = defineProps<CardDropdownProps>()
 
 const menuVisible = ref(false)
 const menuRef = ref(null)
+const showModal = ref<boolean>(false)
 const showModalTaskEdit = ref<boolean>(false)
+const showModalTaskDelete = ref<boolean>(false)
 
 const toggleMenu = () => {
   menuVisible.value = !menuVisible.value
@@ -21,21 +24,43 @@ const toggleMenu = () => {
 
 function openModalCadaster() {
   toggleMenu()
+  showModal.value = true
   showModalTaskEdit.value = true
 }
 
+function openModalDelete() {
+  toggleMenu()
+  showModal.value = true
+  showModalTaskDelete.value = true
+}
+
 function closeModalCadaster() {
+  showModal.value = false
   showModalTaskEdit.value = false
+  showModalTaskDelete.value = false
 }
 </script>
 
 <template>
+  <!-- modal que edita ou deleta tarefa -->
   <ModalFacilita
-    :title="'Editar Tarefa'"
-    :showDialog="showModalTaskEdit"
+    :title="showModalTaskEdit ? 'Editar Tarefa' : undefined"
+    :showDialog="showModal"
     @on-close="closeModalCadaster"
   >
-    <AddTasksModal v-if="showModalTaskEdit" :todo="todo" :isEditTodo="true" />
+    <AddTasksModal
+      v-if="showModalTaskEdit"
+      :todo="todo"
+      :isEditTodo="true"
+      @on-close="closeModalCadaster"
+    />
+    <DeleteTaskModal
+      :todo-id="todo.id"
+      v-if="showModalTaskDelete"
+      :todo="todo"
+      :isEditTodo="true"
+      @on-close="closeModalCadaster"
+    />
   </ModalFacilita>
   <div class="icon-container">
     <DropdownIcon class="icon" @click.stop="toggleMenu" />
@@ -47,7 +72,7 @@ function closeModalCadaster() {
         <div class="circle"></div>
         Editar
       </li>
-      <li class="options">
+      <li class="options" @click="openModalDelete">
         <div class="circle"></div>
         Deletar
       </li>

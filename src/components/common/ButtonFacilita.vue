@@ -29,6 +29,10 @@ const props = defineProps({
   additionalStyles: {
     type: Object as () => Record<string, string | number>,
     default: () => ({})
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -41,19 +45,20 @@ const onClick = () => {
 const buttonStyles = computed(() => ({
   width: props.width,
   height: props.height,
-  backgroundColor: props.backgroundColor,
+  backgroundColor: props.disabled ? '#A6C1D2' : props.backgroundColor,
   color: props.color,
   borderRadius: props.roundedButton ? '100%' : '5px',
   padding: '19px',
   fontSize: '16px',
   fontWeight: '700',
   marginTop: '18px',
+  cursor: props.disabled ? 'not-allowed !important' : 'pointer',
   ...props.additionalStyles
 }))
 </script>
 
 <template>
-  <button :style="buttonStyles" type="submit" @click="onClick">
+  <button :style="buttonStyles" type="submit" @click="onClick" :disabled="disabled">
     <slot></slot>
   </button>
 </template>
