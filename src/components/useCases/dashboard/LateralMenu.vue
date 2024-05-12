@@ -12,6 +12,8 @@ import Icon from '@/assets/images/Icon.vue'
   background-color: $primary-color
   display: flex
   justify-content: center
+  @media (max-width: 530px)
+    display: none
 .icon
   width: 50px
   height: 50px

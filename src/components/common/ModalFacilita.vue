@@ -47,7 +47,6 @@ defineEmits(['on-close'])
 .dialog-content
   background-color: white
   padding: 20px
-  min-width: 425px
   border-radius: 8px
   box-shadow: 0px 20px 30px 0px rgba(119, 137, 158, 0.5)
 

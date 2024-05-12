@@ -34,7 +34,7 @@ function closeModalCadaster() {
 <template>
   <div class="tasks-container">
     <div>
-      <h2 class="my-tasks">Minhas tarefas</h2>
+      <h2>Minhas tarefas</h2>
       <!-- Verifica se possui ou nao tasks e mostra a descriçao de quantas tasks-->
       <p v-if="todosQuantity > 0" class="description">
         Olá <span class="description-bold">Eduardo Pereira</span>, você tem
@@ -55,7 +55,7 @@ function closeModalCadaster() {
       </div>
 
       <!-- Cards das tasks -->
-      <div class="taks" v-for="task in filteredTasks" :key="task.id">
+      <div v-for="task in filteredTasks" :key="task.id">
         <!-- Componente Card utilizando o Pattern Composition que permite deixar o componente bem mais maleável e com menos props dividindo em vários sub componentes -->
         <Card.CardContainer :completed="task.completed">
           <Card.CardCheckboxContainer>
@@ -90,17 +90,25 @@ function closeModalCadaster() {
   width: 100%
   height: calc(100vh - 100px)
   overflow-y: auto
+  @media (max-width: 530px)
+    padding-top: 40px
 
 .search-container
   margin-bottom: 30px
   margin-top: 30px
   width: 633px
+  @media (max-width: 968px)
+    width 400px
+  @media (max-width: 768px)
+    width: 300px
 
 .description
   margin-top: 4px
   color: #77899E
   font-weight: 600
   font-size: 17px
+  @media (max-width: 768px)
+    width: 300px
 
 .description-bold
   color: $primary-color

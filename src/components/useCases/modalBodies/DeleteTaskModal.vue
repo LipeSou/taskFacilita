@@ -65,6 +65,8 @@ function onDeleteTodo() {
   flex-direction: column
   align-items: center
   justify-content: center
+  @media (max-width: 530px)
+    width: 280px
 
 .circle-icon
   width: 136px
@@ -81,6 +83,8 @@ function onDeleteTodo() {
   color: $text-bold;
   font-size: 20px
   font-weight: 700
+  @media (max-width: 530px)
+    text-align: center
 
 .sub-title
   color: #475E78
@@ -98,4 +102,7 @@ function onDeleteTodo() {
   display: flex
   justify-content: center
   gap: 12px
+  @media (max-width: 530px)
+    flex-direction: column
+    gap: 0px
 </style>

@@ -21,6 +21,15 @@ defineProps<{
   align-items: center
   justify-content: space-between
   padding: 14px
+  @media (max-width: 968px)
+    width: 400px
+  @media (max-width: 768px)
+    flex-direction: column
+    width: 300px
+    height: 100%
+    align-items: start
+    gap: 20px
+
 
 .background
   background: white

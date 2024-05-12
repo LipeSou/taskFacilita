@@ -79,6 +79,11 @@ function onChangeCategory(category: string) {
   flex-direction: column
   justify-content: center
   padding-left: 41px
+  @media (max-width: 768px)
+    width: 180px
+    padding-left: 8px
+  @media (max-width: 530px)
+    display: none
 
 .categories-text
   color: #4E5F70

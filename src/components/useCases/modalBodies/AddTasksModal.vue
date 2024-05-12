@@ -2,7 +2,7 @@
 import ButtonFacilita from '@/components/common/ButtonFacilita.vue'
 import InputFacilita from '@/components/common/InputFacilita.vue'
 import { type taskType, type priority } from '@/types/tasks'
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 
 interface AddTaskModalProps {
@@ -15,6 +15,9 @@ const { todo, isEditTodo } = defineProps<AddTaskModalProps>()
 const title = ref(isEditTodo ? todo?.title : '')
 const description = ref(todo?.description ? todo?.description : '')
 const priorityCheck = ref<priority | ''>(todo?.priority ? todo?.priority : '')
+
+// Criar uma referência reativa para armazenar a largura da tela
+const screenWidth = ref(window.innerWidth)
 
 // funçao para atualizar a prioridade conforme clica no checkbox
 function updatePriority(event: Event) {
@@ -48,19 +51,36 @@ function onAddTodo() {
   }
   isEditTodo ? editTodo(todoData) : addTodo(todoData)
 }
+// Função para atualizar o tamanho da tela
+function updateScreenWidth() {
+  screenWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateScreenWidth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth)
+})
 </script>
 
 <template>
   <form @submit.prevent="onAddTodo">
     <div class="input-title">
-      <InputFacilita :label="'Título:'" type="text" :width="'578px'" v-model="title" />
+      <InputFacilita
+        :label="'Título:'"
+        type="text"
+        :width="screenWidth > 530 ? '578px' : '95%'"
+        v-model="title"
+      />
     </div>
 
     <InputFacilita
       :label="'Descrição:'"
       :isTextArea="true"
       type="text"
-      :width="'578px'"
+      :width="screenWidth > 530 ? '578px' : '95%'"
       :height="'183px'"
       v-model="description"
     />
@@ -166,4 +186,7 @@ function onAddTodo() {
 .footer
   display: flex
   justify-content: space-between
+  @media (max-width: 530px)
+    flex-direction: column
+    align-items: center
 </style>
