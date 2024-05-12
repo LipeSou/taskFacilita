@@ -9,7 +9,7 @@ const login = () => {
 </script>
 <template>
   <div class="login-container">
-    <div>
+    <div class="login-containt">
       <h2 class="title">Entre com seus dados de acesso</h2>
       <form @submit.prevent="login">
         <InputFacilita label="Nome de usuário ou e-mail:" type="text" />
@@ -35,10 +35,13 @@ const login = () => {
   align-items: center
   justify-content: center
 
+.login-containt
+  @media (max-width: 530px)
+    width: 90%
+
 .title
   margin-bottom: 36px
   color: $text-bold
-
 
 .input-container
   display: flex
