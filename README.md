@@ -72,6 +72,8 @@ Link:
 ### Tecnologias
 
     - Vue 3 com composition
+
+    - Eslint e Prettier para verificação e formatação do código
     
     - CSS puro com Stylus
         
