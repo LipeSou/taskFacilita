@@ -38,7 +38,9 @@ const allTodos = computed<taskType[]>(() => store.state.todos)
 const addTodo = (payload: taskType) => store.dispatch('addTodo', payload)
 const editTodo = (payload: taskType) => store.dispatch('editTodo', payload)
 
-function onAddTodo() {
+const emit = defineEmits(['on-close'])
+
+async function onAddTodo() {
   if (!title.value) return
 
   const id = allTodos.value.length + 1
@@ -49,7 +51,8 @@ function onAddTodo() {
     priority: priorityCheck?.value ? priorityCheck.value : null,
     completed: isEditTodo && todo?.completed ? todo?.completed : false
   }
-  isEditTodo ? editTodo(todoData) : addTodo(todoData)
+  isEditTodo ? await editTodo(todoData) : await addTodo(todoData)
+  emit('on-close')
 }
 // Função para atualizar o tamanho da tela
 function updateScreenWidth() {

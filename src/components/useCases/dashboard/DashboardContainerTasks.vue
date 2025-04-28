@@ -76,7 +76,7 @@ function closeModalCadaster() {
       :showDialog="showModalTaskCadaster"
       @on-close="closeModalCadaster"
     >
-      <AddTasksModal />
+      <AddTasksModal @on-close="closeModalCadaster" />
     </ModalFacilita>
   </div>
 </template>
